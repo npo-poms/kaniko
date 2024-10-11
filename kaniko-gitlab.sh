@@ -8,42 +8,42 @@ fi
 
 echo "Defining function setup_kaniko"
 # Just arranges authentication by copying the config.json file to right spot
-function setup_kaniko() {
+setup_kaniko() {
   mkdir -p /kaniko/.docker
   incoming="$1"
-  if [[ -z "$incoming" ]] ; then
+  if [ -z "$incoming" ] ; then
     echo "No incoming kaniko config file. Using $DOCKER_AUTH_CONFIG"
     incoming="$DOCKER_AUTH_CONFIG"
   fi
   echo "Copying $incoming to /kaniko/.docker/config.json"
-  echo "lines: " $(wc -l $incoming)
+  echo "lines:  $(wc -l $incoming)"
   cp $incoming /kaniko/.docker/config.json
 }
 
 echo "Defining function kaniko_execute"
-function kaniko_execute() {
+kaniko_execute() {
   dir="$1"
-  if [[ -z "$dir" ]] ; then
+  if [ -z "$dir" ] ; then
     dir=$DOCKER_DIR
   fi
   version="$2"
-  if [[ -z "$version" ]] ; then
+  if [ -z "$version" ] ; then
      echo "Version no specified, taking $PROJECT_VERSION"
      version=$PROJECT_VERSION
   fi
 
-  if [[ -z "$IMAGE" ]] ; then
+  if [ -z "$IMAGE" ] ; then
       echo "Missing IMAGE variable. Trying to find now by calling get_actifact_versions"
       get_artifact_versions $dir $version
   fi
   image="$IMAGE"
-  if [[ -z "$image" ]] ; then
+  if [ -z "$image" ] ; then
       echo "No image found "
       exit 1;
   fi
 
 
-  if [[ -z "$version" ]] ; then
+  if [ -z "$version" ] ; then
      echo "Building and pushing image: \"$image\" ($LATEST) (version not found)"
   else
      echo "Building and pushing image: \"$image\" ($LATEST), (project) version: $version"
