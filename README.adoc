@@ -1,0 +1,3 @@
+= npo-poms/kaniko
+
+gcr.io/kaniko-project/executor:debug with some extra script that are used in our pipeline
