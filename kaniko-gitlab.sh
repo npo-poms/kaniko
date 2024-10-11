@@ -57,6 +57,7 @@ kaniko_execute() {
     --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA \
     --build-arg CI_COMMIT_TIMESTAMP=$CI_COMMIT_TIMESTAMP \
     --build-arg CI_COMMIT_TITLE="$CI_COMMIT_TITLE" \
+    --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
     --destination $image\
