@@ -52,7 +52,6 @@ kaniko_execute() {
   else
      echo "Building and pushing image: \"$image\" ($LATEST), (project) version: $version"
   fi
-  set -x
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
     --dockerfile $dir/Dockerfile \

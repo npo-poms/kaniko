@@ -95,7 +95,7 @@ get_artifact_versions() {
 #  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
 #  which is confusing and error-prone.
 store_image_version() {
-  echo "IMAGE_TAG=$IMAGE_TAG" | tee -a job.env
+  echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
   echo "IMAGE=$IMAGE" | tee -a job.env
   echo "IMAGE_INTERNAL=$IMAGE_INTERNAL" | tee -a job.env
   echo "IMAGE_NAME=$IMAGE_NAME" | tee -a job.env
