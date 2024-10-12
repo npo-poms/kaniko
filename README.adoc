@@ -35,6 +35,9 @@ INFO[0001] Unpacking rootfs as cmd ADD target/*${PROJECT_VERSION}.war /tmp/app.w
 
 
 
+Script to run in a directory with a maven `pom.xml` a `target/*.war` and a `Dockerfile`.
+
+The war can be used in the Dockerfile, the version of the image will be taken from the `pom.xml`. The result will build and be pushed to the registry with kaniko (in docker)
 
 
 
