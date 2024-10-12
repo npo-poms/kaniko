@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "$LINENO docker build setup"
+echo "docker build setup"
 
 if [ "$TRACE" = "true" ] ; then
    echo "Tracing"
@@ -8,7 +8,7 @@ if [ "$TRACE" = "true" ] ; then
 fi
 
 
-echo "$LINENO Define determine_image_version"
+echo "Define determine_image_version"
 
 # If store_image_version was called earlier in the pipeline, the the results of this are in job.env
 determine_image_version() {
@@ -35,7 +35,7 @@ determine_image_version() {
 
 
 
-echo "$LINENO defining os_app_name"
+echo "defining os_app_name"
 # Take name of application from Dockerfile
 # This will be the name of the resulting docker image (without namespace). E.g. 'vproapi'.
 os_app_name() {
@@ -57,7 +57,7 @@ os_app_name() {
   echo $appname
 }
 
-echo "$LINENO defining get_artifact_versions"
+echo "defining get_artifact_versions"
 
 # exports PROJECT_VERSION, IMAGE_TAG, IMAGE, IMAGE_INTERNAL, IMAGE_NAME
 # first argument: directory containing the docker file

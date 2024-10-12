@@ -5,7 +5,7 @@
 KANIKO_IMAGE=npo-poms/kaniko
 #KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:2
 PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-docker run -v ~:/root -v "$(pwd)":/workspace \
+docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
     -e PROJECT_VERSION=$PROJECT_VERSION \
     -e IMAGE_TAG=dev \
     -e NAMESPACE=poms \

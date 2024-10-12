@@ -1,3 +1,69 @@
 = npo-poms/kaniko
 
-gcr.io/kaniko-project/executor:debug with some extra script that are used in our pipeline
+`gcr.io/kaniko-project/executor:debug` with some extra scripts that are use in our pipeline. It's better to have the scripts in an image, which is used in a pipeline than having the scripts themselves encapsulated in a yaml.
+
+== Using locally
+An advantage of this approach is that it can be used locally. Sometimes it is just good to know how to deploy without gitlab itself. It debugs easier, and I needed it also when our account ran out of minutes.
+
+[source, bash]
+----
+michiel@mitulo:(pomst)(main,80)~/npo/media/main/media-server$ ~/github/npo-poms/kaniko/kaniko.sh
+2 docker build setup
+11 Define determine_image_version
+38 defining os_app_name
+60 defining get_artifact_versions
+kaniko build setup
+Defining function setup_kaniko
+Defining function kaniko_execute
+Using build args
+Copying /root/.docker/config-gitlab.json to /kaniko/.docker/config.json
+lines:  24 /root/.docker/config-gitlab.json
+Version no specified, taking 8.3-SNAPSHOT
+Missing IMAGE variable. Trying to find now by calling get_actifact_versions
+Using image artifact: "registry.npohosting.nl/poms/media:dev" (tag: "dev", internal: "/poms/media:dev", full: "poms/media:dev")
+Building and pushing image: "registry.npohosting.nl/poms/media:dev" (), (project) version: 8.3-SNAPSHOT
+INFO[0000] Retrieving image manifest ghcr.io/vpro/tomcat:10.19
+INFO[0000] Retrieving image ghcr.io/vpro/tomcat:10.19 from registry ghcr.io
+INFO[0001] Built cross stage deps: map[]
+INFO[0001] Retrieving image manifest ghcr.io/vpro/tomcat:10.19
+INFO[0001] Returning cached image manifest
+INFO[0001] Executing 16 build triggers
+INFO[0001] Building stage 'ghcr.io/vpro/tomcat:10.19' [idx: '0', base-idx: '-1']
+INFO[0001] Unpacking rootfs as cmd ADD target/*${PROJECT_VERSION}.war /tmp/app.war requires it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+
+It will pick up needed settings with credentials from several spots in your home dir. Where you may have them using
+[source, bash]
+----
+oc get secret ... > ~/.kube/config.gitlab
+----
