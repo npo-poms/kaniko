@@ -1,13 +1,17 @@
 #!/bin/sh
+echo "--------"
+echo "Executing $0"
 
 export DOCKER_DIR
 DOCKER_DIR="$(pwd)"
 export DOCKER_BUILD_ARGS=  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
-export REGISTRY=registry.npohosting.nl # For deploying to openshift, this must be   REGISTRY: openshift-image-registry.apps.cluster.chp4.io. (See also maven_deploy_openshift)
+export REGISTRY="${REGISTRY:-registry.npohosting.nl}"
 export DOCKER_AUTH_CONFIG_FILE=$HOME/.docker/config-gitlab.json
 export KANIKO_ARGS='--cache=true --cache-copy-layers=true'
 export AS_LATEST='false'
 export TRACE='false'
+
+echo Using registry ${REGISTRY}
 
 . /docker-build-setup.sh
 . /kaniko-gitlab.sh
