@@ -8,8 +8,8 @@ NAMESPACE=${NAMESPACE:-poms}
 # REGISTRY: openshift-image-registry.apps.cluster.chp4.io.
 
 #echo "Registry: ${REGISTRY}"
-KANIKO_IMAGE=npo-poms/kaniko
-#KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:3
+#KANIKO_IMAGE=npo-poms/kaniko
+KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:4
 
 PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 echo "Found project version ${PROJECT_VERSION}"
