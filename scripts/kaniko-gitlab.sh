@@ -19,9 +19,13 @@ setup_kaniko() {
     echo "No incoming kaniko config file. Using $DOCKER_AUTH_CONFIG"
     incoming="$DOCKER_AUTH_CONFIG"
   fi
-  echo "Copying $incoming to /kaniko/.docker/config.json"
-  echo "lines:  $(wc -l $incoming)"
-  cp $incoming /kaniko/.docker/config.json
+  if [ -e "$incoming" ] ; then
+    echo "Copying $incoming to /kaniko/.docker/config.json"
+    echo "lines:  $(wc -l $incoming)"
+    cp $incoming /kaniko/.docker/config.json
+  else
+    echo "No incoming docker configuration file '$incoming'"
+  fi
 }
 
 echo "Defining function kaniko_execute"
@@ -32,7 +36,7 @@ kaniko_execute() {
   fi
   version="$2"
   if [ -z "$version" ] ; then
-     echo "Version no specified, taking $PROJECT_VERSION"
+     echo "Version no specified, taking PROJECT_VERSION=$PROJECT_VERSION"
      version=$PROJECT_VERSION
   fi
 
@@ -45,7 +49,6 @@ kaniko_execute() {
       echo "No image found "
       exit 1;
   fi
-
 
   if [ -z "$version" ] ; then
      echo "Building and pushing image: \"$image\" ($LATEST) (version not found)"
