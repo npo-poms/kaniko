@@ -59,7 +59,7 @@ os_app_name() {
 
 echo "defining get_artifact_versions"
 
-# exports PROJECT_VERSION, IMAGE_TAG, IMAGE, IMAGE_INTERNAL, IMAGE_NAME
+# exports PROJECT_VERSION, IMAGE_TAG, IMAGE, IMAGE_NAME
 # first argument: directory containing the docker file
 # second argument: version (exported as PROJECT_VERSION)
 # the name of the image is determined with os_app_name
@@ -84,9 +84,8 @@ get_artifact_versions() {
   export IMAGE_NAME=$OS_APPLICATION
   export FULL_IMAGE_NAME=$NAMESPACE/$IMAGE_NAME:$IMAGE_TAG
   export IMAGE=$REGISTRY/$FULL_IMAGE_NAME
-  export IMAGE_INTERNAL=$INTERNAL_REGISTRY/$FULL_IMAGE_NAME
 
-  echo "Using image artifact: \"$IMAGE\" (tag: \"$IMAGE_TAG\", internal: \"$IMAGE_INTERNAL\", full: \"$FULL_IMAGE_NAME\")"
+  echo "Using image artifact: \"$IMAGE\" (tag: \"$IMAGE_TAG\", full: \"$FULL_IMAGE_NAME\")"
 }
 
 
@@ -97,11 +96,8 @@ get_artifact_versions() {
 store_image_version() {
   echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
   echo "IMAGE=$IMAGE" | tee -a job.env
-  echo "IMAGE_INTERNAL=$IMAGE_INTERNAL" | tee -a job.env
   echo "IMAGE_NAME=$IMAGE_NAME" | tee -a job.env
   echo "FULL_IMAGE_NAME=$FULL_IMAGE_NAME" | tee -a job.env
-
   echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
-
 }
 
