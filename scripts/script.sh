@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "--------"
-echo "Executing $0"
-
+echo "Executing $0 in "
+pwd
 export DOCKER_DIR
 DOCKER_DIR="$(pwd)"
 export DOCKER_BUILD_ARGS=  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
