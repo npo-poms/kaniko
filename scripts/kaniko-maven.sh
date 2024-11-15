@@ -1,6 +1,6 @@
-#!/bin/sh
+##!/bin/sh
 
-. "$(dirname "$0")"/kaniko-gitlab.sh
+. /kaniko-gitlab.sh
 echo "Defining function package_applications"
 package_application() {
   app_dir=$1

@@ -1,9 +1,9 @@
-#!/bin/sh
+##!/bin/sh
 # This is the script can be used to build and push (via kaniko) an openshift statefull set.
 # This script used to be present in gitlab templates, but that's unmaintainble and unreusable
 # This can be used locally via run-in-docker.sh in a directory of interest
 
-. "$(dirname "$0")"/docker-build-setup.sh
+. /docker-build-setup.sh
 
 echo "kaniko build setup";
 if [ "$TRACE" = "true" ] ; then

@@ -16,6 +16,6 @@ echo Using registry ${REGISTRY}
 . /kaniko-gitlab.sh
 
 echo "Using build args $DOCKER_BUILD_ARGS"
-setup_kaniko $DOCKER_AUTH_CONFIG_FILE
+setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
 kaniko_execute
 store_image_version
