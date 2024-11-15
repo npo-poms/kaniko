@@ -33,10 +33,11 @@ kaniko_execute() {
   dir="$1"
   if [ -z "$dir" ] ; then
     dir=$DOCKER_DIR
+    echo "No directory specified, taking from environment DOCKER_DIR=$DOCKER_DIR"
   fi
   version="$2"
   if [ -z "$version" ] ; then
-     echo "Version no specified, taking PROJECT_VERSION=$PROJECT_VERSION"
+     echo "Version no specified, taking from environment PROJECT_VERSION=$PROJECT_VERSION"
      version=$PROJECT_VERSION
   fi
 
