@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "docker build setup"
+echo "docker build setup $0"
 
 if [ "$TRACE" = "true" ] ; then
    echo "Tracing"

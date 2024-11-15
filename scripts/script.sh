@@ -13,7 +13,6 @@ export TRACE='false'
 
 echo Using registry ${REGISTRY}
 
-. /docker-build-setup.sh
 . /kaniko-gitlab.sh
 
 echo "Using build args $DOCKER_BUILD_ARGS"
