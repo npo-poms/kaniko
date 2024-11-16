@@ -2,6 +2,18 @@
 
 `gcr.io/kaniko-project/executor:debug` with some extra scripts that are use in our pipeline. It's better to have the scripts in an image, which is used in a pipeline than having the scripts themselves encapsulated in a yaml.
 
+== features
+
+The scripts are mainly targeted at maven projects
+
+- that produce wars
+- multimodule, a project running this in can even product multiple wars.
+- a module producing a war, must contain a Dockerfile with a ARG NAME=<name>
+  which will be used to generate the image name
+- the resulting images are default pushed to registry.npohosting.nl
+
+
+
 == Using locally
 An advantage of this approach is that it can be used locally. Sometimes it is just good to know how to deploy without gitlab itself. It debugs easier, and I needed it also when our account ran out of minutes.
 
