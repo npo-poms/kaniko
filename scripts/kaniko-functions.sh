@@ -16,7 +16,7 @@ run_kaniko() {
   setup_kaniko
   kaniko_execute $1
   store_variables
-  store_image_version
+  store_image_name
 }
 
 #  Stores relevant variables determined by get_artifact_versions in job.env
@@ -31,7 +31,7 @@ store_variables() {
   #echo AS_LATEST=${AS_LATEST:-'false'}
 }
 
-store_image_version() {
+store_image_name() {
   echo IMAGE=$IMAGE | tee -a job.env
 }
 
