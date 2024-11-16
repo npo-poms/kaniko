@@ -8,6 +8,9 @@
 
 echo "kaniko gitlab functions"
 
+AS_LATEST=${AS_LATEST:-'false'}
+
+
 # shellcheck source=${KANIKO_SCRIPTS}kaniko-functions.sh
 if ! type os_app_name &> /dev/null ; then
 . "$KANIKO_SCRIPTS"kaniko-functions.sh

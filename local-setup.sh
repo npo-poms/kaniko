@@ -1,9 +1,6 @@
 # Sets up some environment as gitlab  would do.
 # included by kaniko.sh and by local-setup.sh
 
-REGISTRY=${REGISTRY:-registry.npohosting.nl}
-NAMESPACE=${NAMESPACE:-poms}
-
 CI_COMMIT_REF_NAME="$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)"
 PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 echo "Found project version ${PROJECT_VERSION}"

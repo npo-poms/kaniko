@@ -1,4 +1,11 @@
 ##!/bin/sh
+KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
+REGISTRY="${REGISTRY:-registry.npohosting.nl}"
+NAMESPACE=${NAMESPACE:-poms}
+DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
+DOCKER_AUTH_CONFIG_FILE=$HOME/.docker/config-gitlab.json
+
+
 if ! type os_app_name &> /dev/null; then
   . "$KANIKO_SCRIPTS"dockerfile-functions.sh
 fi
