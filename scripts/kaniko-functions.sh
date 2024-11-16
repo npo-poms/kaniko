@@ -1,8 +1,8 @@
 ##!/bin/sh
 KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
-REGISTRY="${REGISTRY:-registry.npohosting.nl}"
-NAMESPACE=${NAMESPACE:-poms}
+
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
+AS_LATEST=${AS_LATEST:-'false'}
 
 
 if ! type os_app_name &> /dev/null; then
@@ -69,6 +69,12 @@ kaniko_execute() {
     echo "kaniko/executor not found"
     return 1
   fi
+   # used by plain docker builds
+  if [ "$AS_LATEST" = 'true' ] ; then
+    export LATEST="--destination $REGISTRY/$FULL_IMAGE_NAME"
+  else
+    export LATEST=
+  fi
   echo Cache $REGISTRY/$NAMESPACE/caches
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
@@ -85,3 +91,4 @@ kaniko_execute() {
     --destination $image\
     --cleanup
 }
+

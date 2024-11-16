@@ -8,7 +8,6 @@
 
 echo "kaniko gitlab functions"
 
-AS_LATEST=${AS_LATEST:-'false'}
 
 if [ -f job.env ] ; then
   echo "Found job.env!"

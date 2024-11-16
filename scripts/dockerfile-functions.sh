@@ -1,6 +1,9 @@
 ##!/bin/sh
 echo "docker build setup"
 
+REGISTRY="${REGISTRY:-registry.npohosting.nl}"
+NAMESPACE=${NAMESPACE:-poms}
+
 TXT_HI="\e[93m" && TXT_CLEAR="\e[0m"
 
 # scripts around the 'os_app_name' function, that determin the artifact name using information from Dockerfil
@@ -65,24 +68,4 @@ get_artifact_versions() {
   echo "Using image artifact: \"$IMAGE\" (tag: \"$IMAGE_TAG\", full: \"$FULL_IMAGE_NAME\")"
 }
 
-echo "Define determine_image_version"
-determine_image_version() {
-  if [ "$IMAGE_TAG" = '' ] ; then
-      echo "No IMAGE_TAG defined. Breaking build. This must be defined in job rule!"
-      exit 1
-  fi
-  if [ "$IMAGE_NAME" = '' ] ; then
-     echo "No IMAGE_NAME defined. Taking from os_app_name"
-     IMAGE_NAME=$(os_app_name)
-     export IMAGE_NAME
-  fi
-  # used by plain docker builds
-  if [ "$AS_LATEST" = 'true' ] ; then
-    export LATEST="--destination $REGISTRY/$IMAGE_NAME"
-  else
-    export LATEST=
-  fi
-  export IMAGE=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-  echo "IMAGE: $IMAGE"
-}
 
