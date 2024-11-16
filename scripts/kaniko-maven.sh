@@ -30,12 +30,12 @@ package_wars() {
   else
 
     echo "No Dockerfile and no OS_APPLICATIONS variable found"
-    OS_APPLICATIONS=$(find . -name '*.war' -exec sh -c 'f=$(dirname $1); (cd $f/..;  basename $PWD) ;' shell {} \; | tr '\n' ','  | sed 's/,$//')
+    OS_APPLICATIONS=$(find . -maxdepth 3  -mindepth 3 -name "*${PROJECT_VERSION}.war" -exec sh -c 'f=$(dirname $1); (cd $f/..;  basename $PWD) ;' shell {} \; | tr '\n' ','  | sed 's/,$//')
     if [ ! -z "$OS_APPLICATIONS" ] ; then
       echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
       package_wars
     else
-      echo "Could not guess either"
+      echo "Could not guess either for ${PROJECT_VERSION}"
     fi
   fi
 
