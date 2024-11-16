@@ -8,8 +8,8 @@ cat job.env
 # REGISTRY: openshift-image-registry.apps.cluster.chp4.io.
 
 #echo "Registry: ${REGISTRY}"
-KANIKO_IMAGE=npo-poms/kaniko
-#KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:main
+#KANIKO_IMAGE=npo-poms/kaniko
+KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:5
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
     -e PROJECT_VERSION="$PROJECT_VERSION" \
