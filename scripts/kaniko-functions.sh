@@ -3,7 +3,6 @@ KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
 REGISTRY="${REGISTRY:-registry.npohosting.nl}"
 NAMESPACE=${NAMESPACE:-poms}
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
-DOCKER_AUTH_CONFIG_FILE=$HOME/.docker/config-gitlab.json
 
 
 if ! type os_app_name &> /dev/null; then
@@ -14,10 +13,26 @@ fi
 # param: directory to execute for
 run_kaniko() {
   echo "Using build args $DOCKER_BUILD_ARGS"
-  setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
+  setup_kaniko
   kaniko_execute "$@"
   store_image_version
 }
+
+
+echo "Defining function setup_kaniko"
+# Just arranges authentication by copying the config.json file to right spot
+setup_kaniko() {
+  mkdir -p /kaniko/.docker
+  incoming="$DOCKER_AUTH_CONFIG"
+  if [ -e "$incoming" ] ; then
+    echo "Copying $incoming to /kaniko/.docker/config.json"
+    echo "lines:  $(wc -l $incoming)"
+    cp $incoming /kaniko/.docker/config.json
+  else
+    echo "No incoming docker configuration file '$incoming'"
+  fi
+}
+
 
 
 echo "Defining function kaniko_execute"

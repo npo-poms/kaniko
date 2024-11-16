@@ -11,7 +11,6 @@ if [ "$TRACE" = 'true' ]; then
   set -x
 fi
 
-echo Using registry ${REGISTRY}
 . "$KANIKO_SCRIPTS"kaniko-gitlab-functions.sh
 
 . "$KANIKO_SCRIPTS"kaniko-maven.sh

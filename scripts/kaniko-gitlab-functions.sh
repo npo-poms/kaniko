@@ -18,31 +18,10 @@ else
   echo "No job.env in $(pwd)"
 fi
 
-
-
 # shellcheck source=${KANIKO_SCRIPTS}kaniko-functions.sh
 if ! type os_app_name &> /dev/null ; then
 . "$KANIKO_SCRIPTS"kaniko-functions.sh
 fi
-
-echo "Defining function setup_kaniko"
-# Just arranges authentication by copying the config.json file to right spot
-# $1 ~/.docker/config.json file. Defaults to DOCKER_AUTH_CONFIG
-setup_kaniko() {
-  mkdir -p /kaniko/.docker
-  incoming="$1"
-  if [ -z "$incoming" ] ; then
-    echo "No incoming kaniko config file. Using $DOCKER_AUTH_CONFIG"
-    incoming="$DOCKER_AUTH_CONFIG"
-  fi
-  if [ -e "$incoming" ] ; then
-    echo "Copying $incoming to /kaniko/.docker/config.json"
-    echo "lines:  $(wc -l $incoming)"
-    cp $incoming /kaniko/.docker/config.json
-  else
-    echo "No incoming docker configuration file '$incoming'"
-  fi
-}
 
 
 

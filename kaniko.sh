@@ -16,6 +16,7 @@ docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspac
     -e IMAGE_TAG=${IMAGE_TAG} \
     -e NAMESPACE=${NAMESPACE} \
     -e REGISTRY="${REGISTRY}" \
+    -e DOCKER_AUTH_CONFIG="/root/.docker/config-gitlab.json" \
     -e CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}" \
     -e CI_COMMIT_SHA="$(git show --format="%H"  --no-patch)" \
     -e CI_COMMIT_TIMESTAMP="$(git show --format="%aI"  --no-patch)" \

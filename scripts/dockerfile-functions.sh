@@ -1,5 +1,5 @@
 ##!/bin/sh
-echo "docker build setup $0"
+echo "docker build setup"
 
 TXT_HI="\e[93m" && TXT_CLEAR="\e[0m"
 
