@@ -25,4 +25,4 @@ fi
 if [ -z "$fun" ] ; then
   fun="run_kaniko_maven"
 fi
-$fun
+$fun .

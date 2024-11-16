@@ -9,15 +9,31 @@ if ! type os_app_name &> /dev/null; then
   . "$KANIKO_SCRIPTS"dockerfile-functions.sh
 fi
 
-# sets up kaniko, executes it, and stores some variables
-# param: directory to execute for
+# sets up kaniko, executes it in a dir, and stores some variables
+# $1: directory to execute for
 run_kaniko() {
   echo "Using build args $DOCKER_BUILD_ARGS"
   setup_kaniko
-  kaniko_execute "$@"
+  kaniko_execute $1
+  store_variables
   store_image_version
 }
 
+#  Stores relevant variables determined by get_artifact_versions in job.env
+#  I'm not sure this is very useful. You can just as wel call get_articaft_versions again in the next job
+#  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
+#  which is confusing and error-prone.
+store_variables() {
+  echo "Storing variables in job.env"
+  echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
+  echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
+  echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a job.env
+  #echo AS_LATEST=${AS_LATEST:-'false'}
+}
+
+store_image_version() {
+  echo IMAGE=$IMAGE | tee -a job.env
+}
 
 echo "Defining function setup_kaniko"
 # Just arranges authentication by copying the config.json file to right spot
@@ -36,6 +52,7 @@ setup_kaniko() {
 
 
 echo "Defining function kaniko_execute"
+# Determins the IMAGE and runs kaniko
 # $1: is the directory to run for, defaults to DOCKER_DIR
 # $2: is a version  to build defaults to PROJECT_VERSION
 kaniko_execute() {

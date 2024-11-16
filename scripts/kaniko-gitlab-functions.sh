@@ -24,16 +24,4 @@ fi
 
 
 
-#  Stores relevant variables determined by get_artifact_versions in job.env
-#  I'm not sure this is very useful. You can just as wel call get_articaft_versions again in the next job
-#  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
-#  which is confusing and error-prone.
-store_image_version() {
-  echo "Storing variables in job.env"
-  echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
-  echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
-  echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a job.env
-  #echo AS_LATEST=${AS_LATEST:-'false'}
-
-}
 

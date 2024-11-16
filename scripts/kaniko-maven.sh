@@ -49,5 +49,5 @@ run_kaniko_maven() {
   echo "Using build args $DOCKER_BUILD_ARGS"
   setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
   package_wars
-  store_image_version
+  store_variables
 }
