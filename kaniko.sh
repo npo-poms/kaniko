@@ -2,7 +2,8 @@
 # This script calls kaniko (in docker) for the current directory. You can put it in your path
 # It's actually calling the scripts/script.sh in ghcr.io/npo-poms/kaniko
 
-source $(dirname "${BASH_SOURCE[0]}")/local-setup.sh
+$(dirname "${BASH_SOURCE[0]}")/local-setup.sh
+cat job.env
 
 # REGISTRY: openshift-image-registry.apps.cluster.chp4.io.
 

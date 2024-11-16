@@ -1,10 +1,10 @@
+#!/bin/sh
 # Sets up some environment as gitlab  would do.
-# included by kaniko.sh and by local-setup.sh
+# called by kaniko.sh and by local-setup.sh, produces job.env
 
-CI_COMMIT_REF_NAME="$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)"
-PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-echo "Found project version ${PROJECT_VERSION}"
-
+echo CI_COMMIT_REF_NAME="$(git symbolic-ref -q --short HEAD || git describe --tags --exact-match)" > job.env
+echo PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout) >> job.env
+. job.env
 
 if [  "$IMAGE_TAG" = "" ] ; then  # you can specify the image-tag by:  IMAGE_TAG=.. kaniko.sh
   case $CI_COMMIT_REF_NAME in
@@ -20,4 +20,5 @@ if [  "$IMAGE_TAG" = "" ] ; then  # you can specify the image-tag by:  IMAGE_TAG
   esac
 fi
 
-echo "image tag $IMAGE_TAG"
+echo IMAGE_TAG=$IMAGE_TAG >> job.env
+

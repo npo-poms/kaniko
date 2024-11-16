@@ -13,7 +13,7 @@ echo "defining os_app_name"
 os_app_name() {
   DIR=$1
   if [ ! -f $DIR/Dockerfile ] ; then
-    echo -e "%{TXT_HI}NO Dockerfile found in $(pwd)${TXT_CLEAR}"
+    echo -e "${TXT_HI}NO Dockerfile found in $(pwd)${TXT_CLEAR}"
     ls $DIR
   fi
   appname=$(awk -F= '$1 == "ARG NAME"{ print $2}' $DIR/Dockerfile)

@@ -1,4 +1,4 @@
-##!/bin/sh
+#!/bin/sh
 # This is the script can be used to build and push (via kaniko) an openshift statefull set.
 # This script used to be present in gitlab templates, but that's unmaintainble and unreusable
 # This can be used locally via run-in-docker.sh in a directory of interest
@@ -11,10 +11,13 @@ echo "kaniko gitlab functions"
 AS_LATEST=${AS_LATEST:-'false'}
 
 if [ -f job.env ] ; then
-  echo "Found job.env"
+  echo "Found job.env!"
   cat job.env
-  . job.env
+  . ./job.env
+else
+  echo "No job.env in $(pwd)"
 fi
+
 
 
 # shellcheck source=${KANIKO_SCRIPTS}kaniko-functions.sh
