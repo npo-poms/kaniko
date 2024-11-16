@@ -9,7 +9,6 @@ An advantage of this approach is that it can be used locally. Sometimes it is ju
 ----
 michiel@mitulo:(pomst)(main,80)~/npo/media/main/media-server$ ~/github/npo-poms/kaniko/kaniko.sh
 2 docker build setup
-11 Define determine_image_version
 38 defining os_app_name
 60 defining get_artifact_versions
 kaniko build setup
