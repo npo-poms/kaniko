@@ -10,6 +10,12 @@ echo "kaniko gitlab functions"
 
 AS_LATEST=${AS_LATEST:-'false'}
 
+if [ -f job.env ] ; then
+  echo "Found job.env"
+  cat job.env
+  . job.env
+fi
+
 
 # shellcheck source=${KANIKO_SCRIPTS}kaniko-functions.sh
 if ! type os_app_name &> /dev/null ; then
