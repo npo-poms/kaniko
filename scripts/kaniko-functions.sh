@@ -1,36 +1,21 @@
 ##!/bin/sh
-# This is the script can be used to build and push (via kaniko) an openshift statefull set.
-# This script used to be present in gitlab templates, but that's unmaintainble and unreusable
-# This can be used locally via run-in-docker.sh in a directory of interest
-
-. /docker-build-setup.sh
-
-echo "kaniko build setup";
-if [ "$TRACE" = "true" ] ; then
-  echo "Tracing"
-  set -xv
-  env
+if ! type get_artifact_versions &> /dev/null; then
+  . "$KANIKO_SCRIPTS"dockerfile-functions.sh
 fi
 
-echo "Defining function setup_kaniko"
-# Just arranges authentication by copying the config.json file to right spot
-setup_kaniko() {
-  mkdir -p /kaniko/.docker
-  incoming="$1"
-  if [ -z "$incoming" ] ; then
-    echo "No incoming kaniko config file. Using $DOCKER_AUTH_CONFIG"
-    incoming="$DOCKER_AUTH_CONFIG"
-  fi
-  if [ -e "$incoming" ] ; then
-    echo "Copying $incoming to /kaniko/.docker/config.json"
-    echo "lines:  $(wc -l $incoming)"
-    cp $incoming /kaniko/.docker/config.json
-  else
-    echo "No incoming docker configuration file '$incoming'"
-  fi
+# sets up kaniko, executes it, and stores some variables
+# param: directory to execute for
+run_kaniko() {
+  echo "Using build args $DOCKER_BUILD_ARGS"
+  setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
+  kaniko_execute "$@"
+  store_image_version
 }
 
+
 echo "Defining function kaniko_execute"
+# $1: is the directory to run for, defaults to DOCKER_DIR
+# $2: is a version  to build defaults to PROJECT_VERSION
 kaniko_execute() {
   dir="$1"
   if [ -z "$dir" ] ; then
@@ -57,6 +42,10 @@ kaniko_execute() {
      echo "Building and pushing image: \"$image\" ($LATEST) (version not found)"
   else
      echo "Building and pushing image: \"$image\" ($LATEST), (project) version: $version"
+  fi
+  if [ ! -f "/kaniko/executor" ] ; then
+    echo "kaniko/executor not found"
+    return 1
   fi
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \

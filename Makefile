@@ -7,3 +7,6 @@ docker:
 
 test:
 	docker run -it --entrypoint /bin/sh npo-poms/kaniko
+
+source:
+	export KANIKO_SCRIPTS=$(pwd)/scripts;
