@@ -35,6 +35,7 @@ store_image_version() {
   echo "IMAGE_NAME=$IMAGE_NAME" | tee -a job.env
   echo "FULL_IMAGE_NAME=$FULL_IMAGE_NAME" | tee -a job.env
   echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
+  echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a job.env
 }
 
 echo "Define determine_image_version"
