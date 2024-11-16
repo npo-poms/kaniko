@@ -30,34 +30,11 @@ fi
 #  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
 #  which is confusing and error-prone.
 store_image_version() {
+  echo "Storing variables in job.env"
   echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
-  echo "IMAGE=$IMAGE" | tee -a job.env
-  echo "IMAGE_NAME=$IMAGE_NAME" | tee -a job.env
-  echo "FULL_IMAGE_NAME=$FULL_IMAGE_NAME" | tee -a job.env
   echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
   echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a job.env
+  #echo AS_LATEST=${AS_LATEST:-'false'}
+
 }
 
-echo "Define determine_image_version"
-# If store_image_version was called earlier in the pipeline, the the results of this are in job.env
-determine_image_version() {
-
-  # used by plain docker builds
-  if [ "$AS_LATEST" = 'true' ] ; then
-    export LATEST="--destination $REGISTRY/$IMAGE_NAME"
-  else
-    export LATEST=
-  fi
-
-  if [ "$IMAGE_TAG" = '' ] ; then
-      echo "No IMAGE_TAG defined. Breaking build. This must be defined in job rule!"
-      exit 1
-  fi
-  if [ "$IMAGE_NAME" = '' ] ; then
-     echo "No IMAGE_NAME defined. Taking from os_app_name"
-     IMAGE_NAME=$(os_app_name)
-     export IMAGE_NAME
-  fi
-  export IMAGE=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG
-  echo "IMAGE: $IMAGE"
-}
