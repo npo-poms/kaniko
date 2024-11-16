@@ -17,5 +17,14 @@ echo Using registry ${REGISTRY}
 
 . "$KANIKO_SCRIPTS"kaniko-maven.sh
 
-package_wars
-
+fun=$1
+if [ "$fun" = "help" ] ;then
+  echo usage
+  echo $0      Run 'run_kaniko_maven' to deploy the war project of the current directory
+  echo         or if OS_APPLICATIONS is defined in all the subdirectories it
+  exit
+fi
+if [ -z "$fun" ] ; then
+  fun="run_kaniko_maven"
+fi
+$fun

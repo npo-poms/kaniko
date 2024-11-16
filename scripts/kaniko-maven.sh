@@ -24,15 +24,26 @@ package_wars() {
       package_war $app_dir
     done
     echo Finished packaging  $OS_APPLICATIONS
-  elif [ ! -f Dockerfile ]; then
+  elif [ -f Dockerfile ]; then
     echo "Packaging the root directory only"
     package_war .
   else
-    echo "NOTHING to do. No Dockerfile and not OS_APPLICATIONS find"
+
+    echo "No Dockerfile and no OS_APPLICATIONS variable found"
+    OS_APPLICATIONS=$(find . -name '*.war' -exec sh -c 'f=$(dirname $1); (cd $f/..;  basename $PWD) ;' shell {} \; | tr '\n' ','  | sed 's/,$//')
+    echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
+    package_wars
   fi
 
 }
 
 package_applications() {
   package_wars "$@"
+}
+
+run_kaniko_maven() {
+  echo "Using build args $DOCKER_BUILD_ARGS"
+  setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
+  package_wars
+  store_image_version
 }

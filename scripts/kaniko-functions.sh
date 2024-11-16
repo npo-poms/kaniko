@@ -47,6 +47,7 @@ kaniko_execute() {
     echo "kaniko/executor not found"
     return 1
   fi
+  echo Cache $REGISTRY/$NAMESPACE/caches
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
     --dockerfile $dir/Dockerfile \
@@ -58,6 +59,7 @@ kaniko_execute() {
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
+    --cache-repo $REGISTRY/$NAMESPACE/caches \
     --destination $image\
     --cleanup
 }
