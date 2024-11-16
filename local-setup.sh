@@ -1,4 +1,5 @@
 # Sets up some environment as gitlab  would do.
+# included by kaniko.sh and by local-setup.sh
 
 REGISTRY=${REGISTRY:-registry.npohosting.nl}
 NAMESPACE=${NAMESPACE:-poms}

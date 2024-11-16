@@ -9,7 +9,7 @@ echo "Defining function package_war(s)"
 
 package_war() {
   app_dir=$1
-  echo -e "----------\nPackaging ${EMP}'$app_dir'${NC} (pom version: $PROJECT_VERSION)"
+  echo -e "----------\nPackaging ${TXT_HI}'$app_dir'${TXT_CLEAR} (pom version: $PROJECT_VERSION)"
   get_artifact_versions $app_dir $PROJECT_VERSION # defined in docker.yml
   ls -l $app_dir/target/*.war
   kaniko_execute $app_dir

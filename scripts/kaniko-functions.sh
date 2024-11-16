@@ -1,5 +1,5 @@
 ##!/bin/sh
-if ! type get_artifact_versions &> /dev/null; then
+if ! type os_app_name &> /dev/null; then
   . "$KANIKO_SCRIPTS"dockerfile-functions.sh
 fi
 

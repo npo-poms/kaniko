@@ -1,9 +1,8 @@
 ##!/bin/sh
 echo "docker build setup $0"
 
+TXT_HI="\e[93m" && TXT_CLEAR="\e[0m"
 
-EMP='\033[0;36m'
-NC='\033[0m' # No Color
 # scripts around the 'os_app_name' function, that determin the artifact name using information from Dockerfil
 
 
@@ -13,6 +12,10 @@ echo "defining os_app_name"
 # This will be the name of the resulting docker image (without namespace). E.g. 'vproapi'.
 os_app_name() {
   DIR=$1
+  if [ ! -f $DIR/Dockerfile ] ; then
+    echo -e "%{TXT_HI}NO Dockerfile found in $(pwd)${TXT_CLEAR}"
+    ls $DIR
+  fi
   appname=$(awk -F= '$1 == "ARG NAME"{ print $2}' $DIR/Dockerfile)
   if [ -z "$appname" ] ; then
      >&2 echo "Could not determine application name from $DIR/Dockerfile (ARG NAME=). Getting from IMAGE_NAME=$IMAGE_NAME"
