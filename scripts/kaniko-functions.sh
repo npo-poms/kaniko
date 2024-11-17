@@ -21,7 +21,7 @@ package_docker() {
 
 package_all_docker() {
   if [ ! -z  "$OS_APPLICATIONS" ] ; then
-    for app_dir in $(echo $OS_APPLICATIONS | sed "s/,/ /g"); do
+    for app_dir in ${OS_APPLICATIONS//,/ }; do
       package_docker $app_dir
     done
     echo Finished packaging  $OS_APPLICATIONS
@@ -30,7 +30,8 @@ package_all_docker() {
     package_docker .
   else
     echo "No Dockerfile and no OS_APPLICATIONS variable found"
-    OS_APPLICATIONS=$(find . -maxdepth 2  -mindepth 2 -name "Dockerfile" -exec sh -c 'f=$(dirname $1); basename $f;'   shell {} \;  | tr '\n' ','  | sed 's/,$//')
+    # We assume that we have to build all Dockerfiles in subdirectories, that have 'ARG NAME'
+    OS_APPLICATIONS=$(find . -maxdepth 2  -mindepth 2 -name "Dockerfile" -exec sh -c 'f=$(dirname $(grep -l -i -E "ARG\s+NAME"  $1)); basename $f;'   shell {} \;  | tr '\n' ','  | sed 's/,$//')
     if [ ! -z "$OS_APPLICATIONS" ] ; then
       echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
       package_all_docker
