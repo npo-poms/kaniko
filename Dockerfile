@@ -9,4 +9,6 @@ COPY scripts/*  $KANIKO_SCRIPTS
 
 RUN  chmod +x ${KANIKO_SCRIPTS}script.sh
 
-ENTRYPOINT [""]
+# This is default for docker, handy in gitlab when it is like that, so you don't need to specifiy it everytime
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["sh"]
