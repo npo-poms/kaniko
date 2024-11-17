@@ -59,7 +59,7 @@ run_kaniko_all() {
   store_variables
 }
 
-#  Stores relevant variables determined by get_artifact_versions in job.env
+#  Stores relevant variables determined by get_docker_image_name in job.env
 #  I'm not sure this is very useful. You can just as wel call get_articaft_versions again in the next job
 #  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
 #  which is confusing and error-prone.
@@ -109,7 +109,7 @@ kaniko_execute() {
 
   if [ -z "$IMAGE" ] ; then
       echo "Missing IMAGE variable. Trying to find now by calling get_actifact_versions"
-      get_artifact_versions $dir $version
+      get_docker_image_name $dir $version
   fi
   image="$IMAGE"
   if [ -z "$image" ] ; then

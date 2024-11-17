@@ -37,7 +37,7 @@ os_app_name() {
   echo $appname
 }
 
-echo "defining get_artifact_versions"
+echo "defining get_docker_image_name"
 
 # exports PROJECT_VERSION, IMAGE_TAG, IMAGE, IMAGE_NAME
 # $1: directory containing the docker file
@@ -68,4 +68,8 @@ get_docker_image_name() {
   echo "Using image artifact: \"$IMAGE\" (tag: \"$IMAGE_TAG\", full: \"$FULL_IMAGE_NAME\")"
 }
 
+#deprecated
+get_artifact_versions() {
+  get_docker_image_name "$@"
+}
 
