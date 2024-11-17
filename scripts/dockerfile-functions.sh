@@ -40,10 +40,10 @@ os_app_name() {
 echo "defining get_artifact_versions"
 
 # exports PROJECT_VERSION, IMAGE_TAG, IMAGE, IMAGE_NAME
-# first argument: directory containing the docker file
-# second argument: version (exported as PROJECT_VERSION)
+# $1: directory containing the docker file
+# $2: version (exported as PROJECT_VERSION)
 # the name of the image is determined with os_app_name
-get_artifact_versions() {
+get_docker_image_name() {
   DIR=$1
   export PROJECT_VERSION=$2
   # gets name from docker file

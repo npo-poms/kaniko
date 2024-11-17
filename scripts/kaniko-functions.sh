@@ -9,6 +9,39 @@ if ! type os_app_name &> /dev/null; then
   . "$KANIKO_SCRIPTS"dockerfile-functions.sh
 fi
 
+# For a certain directory, calculate the docker image name, and run kaniko
+# $1: the diretory to run for
+package_docker() {
+  app_dir=$1
+  echo -e "----------\nPackaging ${TXT_HI}'$app_dir'${TXT_CLEAR} (pom version: $PROJECT_VERSION)"
+  get_docker_image_name $app_dir $PROJECT_VERSION # defined in docker.yml
+  kaniko_execute $app_dir
+}
+
+
+package_all_docker() {
+  if [ ! -z  "$OS_APPLICATIONS" ] ; then
+    for app_dir in $(echo $OS_APPLICATIONS | sed "s/,/ /g"); do
+      package_docker $app_dir
+    done
+    echo Finished packaging  $OS_APPLICATIONS
+  elif [ -f Dockerfile ]; then
+    echo "Packaging the root directory only"
+    package_docker .
+  else
+
+    echo "No Dockerfile and no OS_APPLICATIONS variable found"
+    OS_APPLICATIONS=$(find . -maxdepth 3  -mindepth 3 -name "*${PROJECT_VERSION}.war" -exec sh -c 'f=$(dirname $1); (cd $f/..;  basename $PWD) ;' shell {} \; | tr '\n' ','  | sed 's/,$//')
+    if [ ! -z "$OS_APPLICATIONS" ] ; then
+      echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
+      package_wars
+    else
+      echo "Could not guess either for ${PROJECT_VERSION}"
+    fi
+  fi
+
+}
+
 # sets up kaniko, executes it in a dir, and stores some variables
 # $1: directory to execute for
 run_kaniko() {
@@ -17,6 +50,13 @@ run_kaniko() {
   kaniko_execute $1
   store_variables
   store_image_name
+}
+
+run_kaniko_all() {
+  echo "Using build args $DOCKER_BUILD_ARGS"
+  setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
+  package_all_docker
+  store_variables
 }
 
 #  Stores relevant variables determined by get_artifact_versions in job.env

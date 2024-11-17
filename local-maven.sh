@@ -1,7 +1,10 @@
 #!/bin/bash
 
-$(dirname "${BASH_SOURCE[0]}")/local-setup.sh
+DIR=$(dirname "${BASH_SOURCE[0]}")
+KANIKO_SCRIPTS=$DIR/scripts/
+
+. $DIR/local-setup.sh
+
 cat job.env
 
-KANIKO_SCRIPTS=$(dirname ${BASH_SOURCE[0]})/scripts/
 . "$KANIKO_SCRIPTS"/script.sh

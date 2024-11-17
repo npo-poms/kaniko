@@ -5,9 +5,6 @@
 $(dirname "${BASH_SOURCE[0]}")/local-setup.sh
 cat job.env
 
-# REGISTRY: openshift-image-registry.apps.cluster.chp4.io.
-
-#echo "Registry: ${REGISTRY}"
 #KANIKO_IMAGE=npo-poms/kaniko
 KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:5
 

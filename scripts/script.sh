@@ -11,18 +11,27 @@ if [ "$TRACE" = 'true' ]; then
   set -x
 fi
 
-. "$KANIKO_SCRIPTS"kaniko-gitlab-functions.sh
 
-. "$KANIKO_SCRIPTS"kaniko-maven.sh
+if [ -f job.env ] ; then
+  echo "Found job.env!"
+  cat job.env
+  . ./job.env
+else
+  echo "No job.env in $(pwd)"
+fi
+
+
+. "$KANIKO_SCRIPTS"kaniko-functions.sh
+
 
 fun=$1
 if [ "$fun" = "help" ] ;then
   echo usage
-  echo $0      Run 'run_kaniko_maven' to deploy the war project of the current directory
+  echo $0      Default 'run_kaniko_all' to deploy all found docker deployables
   echo         or if OS_APPLICATIONS is defined in all the subdirectories it
   exit
 fi
 if [ -z "$fun" ] ; then
-  fun="run_kaniko_maven"
+  fun="run_kaniko_all"
 fi
 $fun .
