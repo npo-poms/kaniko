@@ -47,7 +47,7 @@ package_all_docker() {
 run_kaniko() {
   echo "Using build args $DOCKER_BUILD_ARGS"
   setup_kaniko
-  kaniko_execute $1
+  package_docker $1
   store_variables
   store_image_name
 }
