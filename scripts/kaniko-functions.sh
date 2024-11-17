@@ -29,12 +29,11 @@ package_all_docker() {
     echo "Packaging the root directory only"
     package_docker .
   else
-
     echo "No Dockerfile and no OS_APPLICATIONS variable found"
-    OS_APPLICATIONS=$(find . -maxdepth 3  -mindepth 3 -name "*${PROJECT_VERSION}.war" -exec sh -c 'f=$(dirname $1); (cd $f/..;  basename $PWD) ;' shell {} \; | tr '\n' ','  | sed 's/,$//')
+    OS_APPLICATIONS=$(find . -maxdepth 2  -mindepth 2 -name "Dockerfile" -exec sh -c 'f=$(dirname $1); basename $f;'   shell {} \;  | tr '\n' ','  | sed 's/,$//')
     if [ ! -z "$OS_APPLICATIONS" ] ; then
       echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
-      package_wars
+      package_all_docker
     else
       echo "Could not guess either for ${PROJECT_VERSION}"
     fi
