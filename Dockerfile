@@ -9,4 +9,4 @@ COPY scripts/*  $KANIKO_SCRIPTS
 
 RUN  chmod +x ${KANIKO_SCRIPTS}script.sh
 
-ENTRYPOINT ["/script.sh"]
+ENTRYPOINT [""]
