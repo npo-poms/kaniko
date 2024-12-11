@@ -1,6 +1,6 @@
 = npo-poms/kaniko
 
-`gcr.io/kaniko-project/executor:debug` with some extra scripts that are use in our pipelines. It's better to have the scripts in an image, which is used in a pipeline than having the scripts themselves encapsulated in a yaml.
+`gcr.io/kaniko-project/executor:debug` with some extra scripts that are used in our pipelines. It's better to have the scripts in an image, which is used in a pipeline than having the scripts themselves encapsulated in a yaml, because yaml is not very fit for that, and the scripts are than nearly impossible to debug.
 
 == features
 
