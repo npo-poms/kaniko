@@ -37,7 +37,8 @@ package_all_docker() {
     OS_APPLICATIONS=$(find . -maxdepth 2  -mindepth 2 -name "Dockerfile" -exec sh -c 'f=$(dirname $(grep -l -i -E "ARG\s+NAME"  $1)); basename $f;'   shell {} \;  | tr '\n' ','  | sed 's/,$//')
     if [ ! -z "$OS_APPLICATIONS" ] ; then
       echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
-      amount=$(package_all_docker)
+      package_all_docker
+      amount=$?
     else
       echo "Could not guess either for ${PROJECT_VERSION}"
     fi
