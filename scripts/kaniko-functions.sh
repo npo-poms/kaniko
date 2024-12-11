@@ -20,26 +20,30 @@ package_docker() {
 
 
 package_all_docker() {
+  amount=0
   if [ ! -z  "$OS_APPLICATIONS" ] ; then
     for app_dir in ${OS_APPLICATIONS//,/ }; do
       package_docker $app_dir
+      amount=$((amount+1))
     done
     echo Finished packaging  $OS_APPLICATIONS
   elif [ -f Dockerfile ]; then
     echo "Packaging the root directory only"
     package_docker .
+    amount=$((amount+1))
   else
     echo "No Dockerfile and no OS_APPLICATIONS variable found"
     # We assume that we have to build all Dockerfiles in subdirectories, that have 'ARG NAME'
     OS_APPLICATIONS=$(find . -maxdepth 2  -mindepth 2 -name "Dockerfile" -exec sh -c 'f=$(dirname $(grep -l -i -E "ARG\s+NAME"  $1)); basename $f;'   shell {} \;  | tr '\n' ','  | sed 's/,$//')
     if [ ! -z "$OS_APPLICATIONS" ] ; then
       echo "Guessed OS_APPLICATIONS=$OS_APPLICATIONS"
-      package_all_docker
+      amount=$(package_all_docker)
     else
       echo "Could not guess either for ${PROJECT_VERSION}"
     fi
   fi
-
+  echo "Built $amount images"
+  return $amount
 }
 
 # sets up kaniko, executes it in a dir, and stores some variables
@@ -56,7 +60,11 @@ run_kaniko_all() {
   echo "Using build args $DOCKER_BUILD_ARGS"
   setup_kaniko "$DOCKER_AUTH_CONFIG_FILE"
   package_all_docker
+  amount=$?
   store_variables
+  if [ $amount == 1 ] ; then
+    store_image_name
+  fi
 }
 
 #  Stores relevant variables determined by get_docker_image_name in job.env
@@ -72,6 +80,7 @@ store_variables() {
 }
 
 store_image_name() {
+  echo "Storing image name in job.env"
   echo IMAGE=$IMAGE | tee -a job.env
 }
 
