@@ -44,6 +44,8 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=tag
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
