@@ -37,6 +37,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          labels:
+            org.opencontainers.image.title=NPO/CHP5 kaniko 
+            org.opencontainers.image.description='An extension of kaniko-project/executor that contains some script for deploying maven projects to CHP5 @ NPO'
+            org.opencontainers.image.vendor=MMProgrami
           tags: |
             type=ref,event=branch
             type=ref,event=tag
@@ -51,4 +55,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
+          annotations: ${{ steps.meta.outputs.annotations }}
+
      
