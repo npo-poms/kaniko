@@ -142,7 +142,7 @@ kaniko_execute() {
   else
     export LATEST=
   fi
-  echo Cache $REGISTRY/$NAMESPACE/caches
+  echo Cache $REGISTRY/$NAMESPACE/caches, KANIKO_ARGS: $KANIKO_ARGS
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
     --dockerfile $dir/Dockerfile \
