@@ -1,4 +1,5 @@
 ##!/bin/sh
+KANIKO_CACHE=${KANIKO_CACHE:-'$REGISTRY/$NAMESPACE/caches'}
 KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
 
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
@@ -142,7 +143,8 @@ kaniko_execute() {
   else
     export LATEST=
   fi
-  echo Cache $REGISTRY/$NAMESPACE/caches, KANIKO_ARGS: $KANIKO_ARGS
+  echo Cache $KANIKO_CACHE, KANIKO_ARGS: $KANIKO_ARGS
+
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
     --dockerfile $dir/Dockerfile \
@@ -154,7 +156,7 @@ kaniko_execute() {
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
-    --cache-repo $REGISTRY/$NAMESPACE/caches \
+    $([ "$KANIKO_CACHE" == "" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
     --destination $image\
     --cleanup
 }
