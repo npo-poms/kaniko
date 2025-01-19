@@ -156,7 +156,7 @@ kaniko_execute() {
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
-    $([ "$KANIKO_CACHE" == "" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
+    $([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
     --destination $image\
     --cleanup
 }
