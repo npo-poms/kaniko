@@ -159,5 +159,10 @@ kaniko_execute() {
     $([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
     --destination $image\
     --cleanup
+  kaniko_result=$?
+  if [ $kaniko_result -ne 0 ] ; then
+    echo "Kaniko failed ($kaniko_result)"
+    exit $kaniko_result
+  fi
 }
 
