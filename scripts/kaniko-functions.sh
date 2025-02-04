@@ -160,8 +160,9 @@ kaniko_execute() {
     --destination $image\
     --cleanup
   kaniko_result=$?
+  echo "Kaniko result: $kaniko_result"
   if [ $kaniko_result -ne 0 ] ; then
-    echo "Kaniko failed ($kaniko_result)"
+    echo "Kaniko failed"
     exit $kaniko_result
   fi
 }
