@@ -1,5 +1,5 @@
 ##!/bin/sh
-KANIKO_CACHE=${KANIKO_CACHE:-'$REGISTRY/$NAMESPACE/caches'}
+KANIKO_CACHE=${KANIKO_CACHE:-"$REGISTRY/$NAMESPACE/caches"}
 KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
 
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
