@@ -27,9 +27,9 @@ fi
 fun=$1
 if [ "$fun" = "help" ] ;then
   echo usage
-  echo $0      Default 'run_kaniko_all' to deploy all found docker deployables
-  echo         or if OS_APPLICATIONS is defined in all the subdirectories it
-  exit
+  echo "$0      Default 'run_kaniko_all' to deploy all found docker deployables"
+  echo  "       or if OS_APPLICATIONS is defined in all the subdirectories it"
+  exit 1
 fi
 if [ -z "$fun" ] ; then
   fun="run_kaniko_all"
