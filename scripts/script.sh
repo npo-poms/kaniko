@@ -1,4 +1,7 @@
 #!/bin/sh
+
+JOB_ENV=${JOB_ENV:-'job.env'}
+
 echo "--------"
 
 export DOCKER_DIR
@@ -12,12 +15,12 @@ if [ "$TRACE" = 'true' ]; then
 fi
 
 
-if [ -f job.env ] ; then
-  echo "Found job.env!"
-  cat job.env
-  . ./job.env
+if [ -f ${JOB_ENV} ] ; then
+  echo "Found ${JOB_ENV}!"
+  cat ${JOB_ENV}
+  . ./"${JOB_ENV}"
 else
-  echo "No job.env in $(pwd)"
+  echo "No ${JOB_ENV} in $(pwd)"
 fi
 
 

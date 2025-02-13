@@ -5,6 +5,9 @@ KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
 AS_LATEST=${AS_LATEST:-'false'}
 
+JOB_ENV=${JOB_ENV:-'job.env'}
+
+
 
 if ! type os_app_name &> /dev/null; then
   . "$KANIKO_SCRIPTS"dockerfile-functions.sh
@@ -74,16 +77,16 @@ run_kaniko_all() {
 #  which will have the same effect, but I think this is robust, because no need for fiddling with 'need=<previous job>',
 #  which is confusing and error-prone.
 store_variables() {
-  echo "Storing variables in job.env"
-  echo "IMAGE_TAG=$IMAGE_TAG" | tee job.env
-  echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a job.env
-  echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a job.env
+  echo "Storing variables in ${JOB_ENV}"
+  echo "IMAGE_TAG=$IMAGE_TAG" | tee ${JOB_ENV}
+  echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a ${JOB_ENV}
+  echo "OS_APPLICATIONS=$OS_APPLICATIONS" | tee -a ${JOB_ENV}
   #echo AS_LATEST=${AS_LATEST:-'false'}
 }
 
 store_image_name() {
-  echo "Storing image name in job.env"
-  echo IMAGE=$IMAGE | tee -a job.env
+  echo "Storing image name in ${JOB_ENV}"
+  echo IMAGE=$IMAGE | tee -a ${JOB_ENV}
 }
 
 echo "Defining function setup_kaniko"

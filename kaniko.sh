@@ -3,9 +3,10 @@
 # It's actually calling the scripts/script.sh in ghcr.io/npo-poms/kaniko
 DOCKER_CONFIG=${DOCKER_CONFIG:-config-gitlab.json}
 DOCKER_AUTH_CONFIG=${DOCKER_AUTH_CONFIG:-/root/.docker/${DOCKER_CONFIG}}
+JOB_ENV=${JOB_ENV:-'job.env'}
 
 $(dirname "${BASH_SOURCE[0]}")/local-setup.sh
-cat job.env
+cat ${JOB_ENV}
 
 KANIKO_IMAGE=npo-poms/kaniko
 #KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:5
