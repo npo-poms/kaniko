@@ -5,6 +5,7 @@
 == features
 
 The entrypoint of the image is `/script.sh`. This will look for
+
 - a Dockerfile in the current directory
 - or if not present in Dockerfiles in subdirectories (non-recursively).
 - every Dockerfile is build and pushed to the registry (default registry.npohosting.nl)
