@@ -8,8 +8,8 @@ JOB_ENV=${JOB_ENV:-'job.env'}
 $(dirname "${BASH_SOURCE[0]}")/local-setup.sh
 cat ${JOB_ENV}
 
-KANIKO_IMAGE=npo-poms/kaniko
-#KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:5
+#KANIKO_IMAGE=npo-poms/kaniko
+KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:10
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
     -e PROJECT_VERSION="$PROJECT_VERSION" \
@@ -22,5 +22,3 @@ docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspac
     -e CI_COMMIT_TIMESTAMP="$(git show --format="%aI"  --no-patch)" \
     -e CI_COMMIT_TITLE="$(git show --format="%s"  --no-patch)" \
    $KANIKO_IMAGE /script.sh
-
-
