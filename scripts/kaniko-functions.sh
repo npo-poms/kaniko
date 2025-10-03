@@ -1,4 +1,7 @@
 ##!/bin/sh
+
+REGISTRY="${REGISTRY:-registry.npohosting.nl}"
+NAMESPACE=${NAMESPACE:-poms}
 KANIKO_CACHE=${KANIKO_CACHE:-"$REGISTRY/$NAMESPACE/caches"}
 KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
 
@@ -14,7 +17,7 @@ if ! type os_app_name &> /dev/null; then
 fi
 
 # For a certain directory, calculate the docker image name, and run kaniko
-# $1: the diretory to run for
+# $1: the directory to run for
 package_docker() {
   app_dir=$1
   echo -e "----------\nPackaging ${TXT_HI}'$app_dir'${TXT_CLEAR} (pom version: $PROJECT_VERSION)"

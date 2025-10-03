@@ -5,8 +5,10 @@ DOCKER_CONFIG=${DOCKER_CONFIG:-config-gitlab.json}
 DOCKER_AUTH_CONFIG=${DOCKER_AUTH_CONFIG:-/root/.docker/${DOCKER_CONFIG}}
 JOB_ENV=${JOB_ENV:-'job.env'}
 
-$(dirname "${BASH_SOURCE[0]}")/local-setup.sh
-cat ${JOB_ENV}
+if [[ "$JOB_ENV" != "NO" ]]; then
+  $(dirname "${BASH_SOURCE[0]}")/local-setup.sh
+  cat ${JOB_ENV}
+fi
 
 #KANIKO_IMAGE=npo-poms/kaniko
 KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:10

@@ -6,7 +6,7 @@ NAMESPACE=${NAMESPACE:-poms}
 
 TXT_HI="\e[93m" && TXT_CLEAR="\e[0m"
 
-# scripts around the 'os_app_name' function, that determin the artifact name using information from Dockerfil
+# scripts around the 'os_app_name' function, that determine the artifact name using information from Dockerfil
 
 
 
