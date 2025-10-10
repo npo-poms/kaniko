@@ -11,7 +11,7 @@ if [[ "$JOB_ENV" != "NO" ]]; then
 fi
 
 #you can prefix call with : KANIKO_IMAGE=npo-poms/kaniko
-KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:10}
+KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:11}
 
 #-e TZ="CET" Seems good idea, but busyboxy completely messes that up
 
