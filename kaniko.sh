@@ -10,8 +10,10 @@ if [[ "$JOB_ENV" != "NO" ]]; then
   cat ${JOB_ENV}
 fi
 
-#KANIKO_IMAGE=npo-poms/kaniko
+#you can prefix call with : KANIKO_IMAGE=npo-poms/kaniko
 KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:10}
+
+#-e TZ="CET" Seems good idea, but busyboxy completely messes that up
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
     -e PROJECT_VERSION="$PROJECT_VERSION" \
@@ -23,4 +25,5 @@ docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspac
     -e CI_COMMIT_SHA="$(git show --format="%H"  --no-patch)" \
     -e CI_COMMIT_TIMESTAMP="$(git show --format="%aI"  --no-patch)" \
     -e CI_COMMIT_TITLE="$(git show --format="%s"  --no-patch)" \
+    -e KANIKO_CACHE=false \
    $KANIKO_IMAGE /script.sh

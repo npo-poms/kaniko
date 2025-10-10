@@ -3,7 +3,9 @@
 REGISTRY="${REGISTRY:-registry.npohosting.nl}"
 NAMESPACE=${NAMESPACE:-poms}
 KANIKO_CACHE=${KANIKO_CACHE:-"$REGISTRY/$NAMESPACE/caches"}
-KANIKO_ARGS=${KANIKO_ARGS:-'--cache=true --cache-copy-layers=true'}
+
+# kaniko only has remote caches, which does not make much sense in our cases
+KANIKO_ARGS=${KANIKO_ARGS:-'--cache=false --cache-copy-layers=false'}
 
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-}  # Uses eval, when overriding escape whitespace: '--build-arg\ "FOO=BAR"'
 AS_LATEST=${AS_LATEST:-'false'}
@@ -149,7 +151,12 @@ kaniko_execute() {
   else
     export LATEST=
   fi
-  echo Cache $KANIKO_CACHE, KANIKO_ARGS: $KANIKO_ARGS
+
+
+
+  CACHE_ARG=$([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE")
+  echo Cache $CACHE_ARG, KANIKO_ARGS: $KANIKO_ARGS
+
 
   /kaniko/executor $KANIKO_ARGS \
     --context $dir \
@@ -162,7 +169,7 @@ kaniko_execute() {
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
-    $([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
+    $CACHE_ARG \
     --destination $image\
     --cleanup 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
