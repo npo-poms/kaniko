@@ -164,7 +164,7 @@ kaniko_execute() {
     $LATEST \
     $([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE") \
     --destination $image\
-    --cleanup
+    --cleanup 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
   echo "Kaniko result: $kaniko_result"
   if [ $kaniko_result -ne 0 ] ; then

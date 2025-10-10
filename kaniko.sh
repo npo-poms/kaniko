@@ -11,7 +11,7 @@ if [[ "$JOB_ENV" != "NO" ]]; then
 fi
 
 #KANIKO_IMAGE=npo-poms/kaniko
-KANIKO_IMAGE=ghcr.io/npo-poms/kaniko:10
+KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:10}
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
     -e PROJECT_VERSION="$PROJECT_VERSION" \
