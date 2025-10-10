@@ -166,7 +166,7 @@ kaniko_execute() {
     --destination $image\
     --cleanup 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
-  echo "Kaniko result: $kaniko_result"
+  echo "Kaniko result: $kaniko_result" |  ts '[%Y-%m-%d %H:%M:%S]'
   if [ $kaniko_result -ne 0 ] ; then
     echo "Kaniko failed"
     exit $kaniko_result
