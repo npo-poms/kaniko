@@ -31,7 +31,7 @@ Defining function kaniko_execute
 Using build args
 Copying /root/.docker/config-gitlab.json to /kaniko/.docker/config.json
 lines:  24 /root/.docker/config-gitlab.json
-Version no specified, taking 8.3-SNAPSHOT
+Version not specified, taking 8.3-SNAPSHOT
 Missing IMAGE variable. Trying to find now by calling get_actifact_versions
 Using image artifact: "registry.npohosting.nl/poms/media:dev" (tag: "dev", internal: "/poms/media:dev", full: "poms/media:dev")
 Building and pushing image: "registry.npohosting.nl/poms/media:dev" (), (project) version: 8.3-SNAPSHOT

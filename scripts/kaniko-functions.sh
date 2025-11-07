@@ -122,7 +122,7 @@ kaniko_execute() {
   fi
   version="$2"
   if [ -z "$version" ] ; then
-     echo "Version no specified, taking from environment PROJECT_VERSION=$PROJECT_VERSION"
+     echo "Version not specified, taking from environment PROJECT_VERSION=$PROJECT_VERSION"
      version=$PROJECT_VERSION
   fi
 
