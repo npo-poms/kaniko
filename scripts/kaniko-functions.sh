@@ -101,7 +101,7 @@ setup_kaniko() {
   incoming="$DOCKER_AUTH_CONFIG"
   if [ -e "$incoming" ] ; then
     echo "Copying $incoming to /kaniko/.docker/config.json"
-    echo "lines:  $(wc -l $incoming)"
+    #echo "lines:  $(wc -l $incoming)"
     cp $incoming /kaniko/.docker/config.json
   else
     echo "No incoming docker configuration file '$incoming'"
@@ -152,13 +152,13 @@ kaniko_execute() {
     export LATEST=
   fi
 
-
+  set -o pipefail 2>/dev/null
 
   CACHE_ARG=$([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE")
   echo Cache $CACHE_ARG, KANIKO_ARGS: $KANIKO_ARGS
 
-
-  /kaniko/executor $KANIKO_ARGS \
+  #echo "using script avoid logging delays in the pip to ts"
+  script -q -c "/kaniko/executor $KANIKO_ARGS \
     --context $dir \
     --dockerfile $dir/Dockerfile \
     --build-arg PROJECT_VERSION=$version \
@@ -171,7 +171,7 @@ kaniko_execute() {
     $LATEST \
     $CACHE_ARG \
     --destination $image\
-    --cleanup 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
+    --cleanup" 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
   echo "Kaniko result: $kaniko_result" |  ts '[%Y-%m-%d %H:%M:%S]'
   if [ $kaniko_result -ne 0 ] ; then

@@ -14,13 +14,12 @@ if [  "$IMAGE_TAG" = "" ] ; then  # you can specify the image-tag by:  IMAGE_TAG
        IMAGE_TAG=dev
        ;;
      *SNAPSHOT*)
-      IMAGE_TAG=$(echo "${PROJECT_VERSION}-dev" | tr '[:upper:]' '[:lower:]')
+      IMAGE_TAG=$(echo "rel-${PROJECT_VERSION}-dev" | tr '[:upper:]' '[:lower:]')
       ;;
     *)
-      IMAGE_TAG=$(echo "${PROJECT_VERSION}" | tr '[:upper:]' '[:lower:]')
+      IMAGE_TAG=$(echo "rel-${PRJECT_VERSION}" | tr '[:upper:]' '[:lower:]')
       ;;
   esac
 fi
 
 echo IMAGE_TAG=$IMAGE_TAG >> ${JOB_ENV}
-
