@@ -171,7 +171,7 @@ kaniko_execute() {
     $LATEST \
     $CACHE_ARG \
     --destination $image\
-    --cleanup" 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
+    --cleanup" /dev/null 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
   echo "Kaniko result: $kaniko_result" |  ts '[%Y-%m-%d %H:%M:%S]'
   if [ $kaniko_result -ne 0 ] ; then
@@ -179,4 +179,3 @@ kaniko_execute() {
     exit $kaniko_result
   fi
 }
-
