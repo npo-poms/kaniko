@@ -157,20 +157,19 @@ kaniko_execute() {
   CACHE_ARG=$([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE")
   echo Cache $CACHE_ARG, KANIKO_ARGS: $KANIKO_ARGS
 
-  #echo "using script avoid logging delays in the pip to ts"
   script -q -c "/kaniko/executor $KANIKO_ARGS \
-    --context $dir \
-    --dockerfile $dir/Dockerfile \
-    --build-arg PROJECT_VERSION=$version \
-    --build-arg CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME \
-    --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA \
-    --build-arg CI_COMMIT_TIMESTAMP=$CI_COMMIT_TIMESTAMP \
-    --build-arg CI_COMMIT_TITLE="$CI_COMMIT_TITLE" \
+    --context \"$dir\" \
+    --dockerfile \"$dir/Dockerfile\" \
+    --build-arg PROJECT_VERSION=\"$version\" \
+    --build-arg CI_COMMIT_REF_NAME=\"$CI_COMMIT_REF_NAME\" \
+    --build-arg CI_COMMIT_SHA=\"$CI_COMMIT_SHA\" \
+    --build-arg CI_COMMIT_TIMESTAMP=\"$CI_COMMIT_TIMESTAMP\" \
+    --build-arg CI_COMMIT_TITLE='${CI_COMMIT_TITLE}' \
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
     $CACHE_ARG \
-    --destination $image\
+    --destination \"$image\" \
     --cleanup" /dev/null 2>&1 | ts '[%Y-%m-%d %H:%M:%S]'
   kaniko_result=$?
   echo "Kaniko result: $kaniko_result" |  ts '[%Y-%m-%d %H:%M:%S]'
