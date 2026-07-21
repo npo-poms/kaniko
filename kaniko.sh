@@ -15,7 +15,7 @@ KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:main}
 
 #-e TZ="CET" Seems good idea, but busyboxy completely messes that up
 
-docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace \
+docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace  -w /workspace \
     -e PROJECT_VERSION="$PROJECT_VERSION" \
     -e IMAGE_TAG=${IMAGE_TAG} \
     -e NAMESPACE=${NAMESPACE} \

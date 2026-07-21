@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.description='An extension of kaniko-project/execu
 ENV KANIKO_SCRIPTS=/
 COPY scripts/*  $KANIKO_SCRIPTS
 
-RUN apk update && apk add --no-cache util-linux-misc
+RUN apk update && apk add --no-cache util-linux-misc moreutils
 
 RUN  chmod +x ${KANIKO_SCRIPTS}script.sh
 
