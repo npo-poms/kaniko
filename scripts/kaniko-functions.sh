@@ -157,7 +157,7 @@ kaniko_execute() {
   CACHE_ARG=$([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE")
   echo Cache $CACHE_ARG, KANIKO_ARGS: $KANIKO_ARGS
 
-  script -q -c "/kaniko/executor $KANIKO_ARGS \
+  script -q -e -f -c "/kaniko/executor $KANIKO_ARGS \
     --context \"$dir\" \
     --dockerfile \"$dir/Dockerfile\" \
     --build-arg PROJECT_VERSION=\"$version\" \
