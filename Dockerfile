@@ -1,10 +1,13 @@
-FROM gcr.io/kaniko-project/executor:debug
+FROM martizih/kaniko:v1.28.1-alpine
+
 
 LABEL maintainer=poms@mmprogrami.nl
 LABEL org.opencontainers.image.description='An extension of kaniko-project/executor that contains some script for deploying maven projects to CHP5 @ NPO'
 
 ENV KANIKO_SCRIPTS=/
 COPY scripts/*  $KANIKO_SCRIPTS
+
+RUN apk update && apk add --no-cache util-linux-misc
 
 RUN  chmod +x ${KANIKO_SCRIPTS}script.sh
 
