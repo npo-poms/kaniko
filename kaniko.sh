@@ -2,7 +2,7 @@
 # This script calls kaniko (in docker) for the current directory. You can put it in your path
 # It's actually calling the scripts/script.sh in ghcr.io/npo-poms/kaniko
 DOCKER_CONFIG=${DOCKER_CONFIG:-config-gitlab.json}
-DOCKER_AUTH_CONFIG=${DOCKER_AUTH_CONFIG:-/root/.docker/${DOCKER_CONFIG}}
+DOCKER_AUTH_CONFIG_FILE=${DOCKER_AUTH_CONFIG_FILE:-/root/.docker/${DOCKER_CONFIG}}
 JOB_ENV=${JOB_ENV:-'job.env'}
 
 if [[ "$JOB_ENV" != "NO" ]]; then
@@ -13,6 +13,7 @@ fi
 #you can prefix call with : KANIKO_IMAGE=npo-poms/kaniko
 KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:main}
 
+echo "docker auth config ${DOCKER_AUTH_CONFIG_FILE}"
 #-e TZ="CET" Seems good idea, but busyboxy completely messes that up
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace  -w /workspace \
@@ -20,7 +21,7 @@ docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspac
     -e IMAGE_TAG=${IMAGE_TAG} \
     -e NAMESPACE=${NAMESPACE} \
     -e REGISTRY="${REGISTRY}" \
-    -e DOCKER_AUTH_CONFIG="${DOCKER_AUTH_CONFIG}" \
+    -e DOCKER_AUTH_CONFIG_FILE="${DOCKER_AUTH_CONFIG_FILE}" \
     -e TZ=${TZ} \
     -e CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}" \
     -e CI_COMMIT_SHA="$(git show --format="%H"  --no-patch)" \

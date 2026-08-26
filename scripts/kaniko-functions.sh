@@ -98,7 +98,7 @@ echo "Defining function setup_kaniko"
 # Just arranges authentication by copying the config.json file to right spot
 setup_kaniko() {
   mkdir -p /kaniko/.docker
-  incoming="$DOCKER_AUTH_CONFIG"
+  incoming="$DOCKER_AUTH_CONFIG_FILE"
   if [ -e "$incoming" ] ; then
     echo "Copying $incoming to /kaniko/.docker/config.json"
     #echo "lines:  $(wc -l $incoming)"
