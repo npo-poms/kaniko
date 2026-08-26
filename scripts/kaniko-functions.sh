@@ -104,7 +104,7 @@ setup_kaniko() {
     #echo "lines:  $(wc -l $incoming)"
     cp $incoming /kaniko/.docker/config.json
   else
-    echo "No incoming docker configuration file '$incoming'"
+    echo "No existing incoming docker configuration file '$incoming' (expected in  DOCKER_AUTH_CONFIG_FILE environment variable)}"
   fi
 }
 

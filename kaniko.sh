@@ -13,7 +13,7 @@ fi
 #you can prefix call with : KANIKO_IMAGE=npo-poms/kaniko
 KANIKO_IMAGE=${KANIKO_IMAGE:=ghcr.io/npo-poms/kaniko:main}
 
-echo "docker auth config ${DOCKER_AUTH_CONFIG_FILE}"
+echo "docker auth config ${DOCKER_AUTH_CONFIG_FILE}, image tag ${IMAGE_TAG}"
 #-e TZ="CET" Seems good idea, but busyboxy completely messes that up
 
 docker run -v ~/conf:/root/conf -v ~/.docker:/root/.docker -v "$(pwd)":/workspace  -w /workspace \
