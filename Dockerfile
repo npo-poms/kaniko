@@ -1,4 +1,4 @@
-FROM martizih/kaniko:v1.28.1-alpine
+FROM martizih/kaniko:v1.28.3-alpine@sha256:38e3516bcd3ba2646ffdfc06c724c55b3f8b5e6228ebca59b7550b8080c46c17
 
 
 LABEL maintainer=poms@mmprogrami.nl
