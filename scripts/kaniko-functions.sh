@@ -157,6 +157,8 @@ kaniko_execute() {
   CACHE_ARG=$([ "$KANIKO_CACHE" == "" ] || [ "$KANIKO_CACHE" == "false" ] && echo "" || echo "--cache-repo $KANIKO_CACHE")
   echo Cache $CACHE_ARG, KANIKO_ARGS: $KANIKO_ARGS
 
+  ci_commit_title_escaped=$(printf '%s' "$CI_COMMIT_TITLE" | sed "s/'/'\\\\''/g")
+
   script -q -e -f -c "/kaniko/executor $KANIKO_ARGS \
     --context \"$dir\" \
     --dockerfile \"$dir/Dockerfile\" \
@@ -164,7 +166,7 @@ kaniko_execute() {
     --build-arg CI_COMMIT_REF_NAME=\"$CI_COMMIT_REF_NAME\" \
     --build-arg CI_COMMIT_SHA=\"$CI_COMMIT_SHA\" \
     --build-arg CI_COMMIT_TIMESTAMP=\"$CI_COMMIT_TIMESTAMP\" \
-    --build-arg CI_COMMIT_TITLE='${CI_COMMIT_TITLE}' \
+    --build-arg CI_COMMIT_TITLE='${ci_commit_title_escaped}' \
     --custom-platform=linux/amd64 \
     $DOCKER_BUILD_ARGS \
     $LATEST \
