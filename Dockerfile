@@ -1,13 +1,16 @@
-FROM martizih/kaniko:v1.28.3-alpine@sha256:38e3516bcd3ba2646ffdfc06c724c55b3f8b5e6228ebca59b7550b8080c46c17
+FROM martizih/kaniko:v1.28.4-alpine@sha256:eeea1e5c64411dfc187f8b9b5d90677316fe8a33d99e61f02ccef97feaa70dcc
 
 
 LABEL maintainer=poms@mmprogrami.nl
 LABEL org.opencontainers.image.description='An extension of kaniko-project/executor that contains some script for deploying maven projects to CHP5 @ NPO'
 
-ENV KANIKO_SCRIPTS=/
+ENV KANIKO_SCRIPTS=/ \
+    TZ=Europe/Amsterdam
 COPY scripts/*  $KANIKO_SCRIPTS
 
-RUN apk update && apk add --no-cache util-linux-misc moreutils
+RUN apk update && apk add --no-cache util-linux-misc moreutils tzdata \
+    && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo "${TZ}" > /etc/timezone
 
 RUN  chmod +x ${KANIKO_SCRIPTS}script.sh
 
